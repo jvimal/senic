@@ -39,10 +39,13 @@ For more details, check:
 # #+END_HTML
 
 * Getting started
-** Repositories
-There are two repositories for SENIC: one for the NetFPGA prototype
-meant as a reference design for future NICs, and the other is a
-software prototype, so you can benefit from SENIC today.
+** Repository quick links
+There are four repositories for SENIC.
+
+- Kernel patches: https://github.com/sivasankariit/linux-rl
+- SENIC-software: https://github.com/sivasankariit/qfq-rl
+- SENIC-hardware (NetFPGA-10G): https://github.com/gengyl08/SENIC
+- SENIC NSDI experiments: https://github.com/sivasankariit/qfq-rl-eval
 
 ** Software Prototype
 The SENIC software prototype (SENIC-s) consists of a queueing
@@ -72,8 +75,18 @@ implement the parallel packet handoff.
 # git clone https://github.com/sivasankariit/linux-rl.git
 # cd linux-rl
 # make menuconfig
+
 ... select your options
-# make -j9
+... use your favourite installation method.  I prefer make-kpkg.
+... http://www.debian.org/releases/stable/i386/ch08s06.html.en
+# export CONCURRENCY_LEVEL=$(grep ^processor /proc/cpuinfo | wc -l)
+# APPEND_TO_VERSION=-senic
+
+# make-kpkg --initrd --append-to-version $APPEND_TO_VERSION kernel_image
+# make-kpkg --append-to-version $APPEND_TO_VERSION kernel_headers
+
+... The above commands will produce two .deb files which you can
+... install using dpkg -i /path/to/deb
 #+END_SRC
 
 *** Step 2: Downloading SENIC-software
