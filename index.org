@@ -167,6 +167,14 @@ tc class add dev $dev parent 1: classid 1:$classid qfq weight 100 maxpkt $mtu
 tc filter add dev $dev parent 1: ..(filter string).. flowid 1:$classid
 #+END_SRC bash
 
+
+** Hardware Prototype
+We also have a proof-of-concept hardware prototype (SENIC-h) which our
+coauthor Yilong built on top of NetFPGA-10G platform.
+
+The verilog code and experiments are here:
+https://github.com/gengyl08/SENIC.
+
 ** NSDI 2014 experiments
 The scripts used in all our experiments in the NSDI paper are
 available online in the [[https://github.com/sivasankariit/qfq-rl-eval][test repository]].

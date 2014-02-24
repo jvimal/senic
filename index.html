@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>SENIC Documentation</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2014-02-24 09:17:46 PST"/>
+<meta name="author" content="Vimalkumar, Sivasankar"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<style> * { font-family: sans-serif; } body  { font-size: 1.2em; width: 800px; margin: 0 auto; } </style>
+<style> p { text-align: left; line-height: 1.2em; } li {padding-bottom: 0.2em;}</style>
+<style> pre, pre span { font-family: monospace; } </style>
+<style> code { font-family: monospace; font-size: 10pt; background-color: #EDEDED; padding: 2px;} </style>
+<style> th,td { border: 1px solid #ddd } </style>
+<style> div.figure { align: center; } </style>
+<style> h2 { border-bottom: 1px solid #ccc; color: #900; padding-top: 2em; } body {background-color: #F8F4E7; color: #552800;}
+h3, h4, h5, h6 {border-bottom: 1px solid #ccc; color: #0B108C; }</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="content">
+
+<h1 class="title">SENIC Documentation</h1>
+
+<script type="text/javascript">
+/* Google analytics */
+</script>
+<meta name="google-site-verification" content="XNGh0oE3TtdednJ1g-ukOSKZ78wu59yC1sqeQvkf69k" />
+
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 What is SENIC? </a></li>
+<li><a href="#sec-2">2 Getting started </a>
+<ul>
+<li><a href="#sec-2_1">2.1 Repositories </a></li>
+<li><a href="#sec-2_2">2.2 Software Prototype </a>
+<ul>
+<li><a href="#sec-2_2_1">2.2.1 Step 1: Installing the Kernel </a></li>
+<li><a href="#sec-2_2_2">2.2.2 Step 2: Downloading SENIC-software </a></li>
+<li><a href="#sec-2_2_3">2.2.3 Step 3: Trying it out </a></li>
+</ul>
+</li>
+<li><a href="#sec-2_3">2.3 Hardware Prototype </a></li>
+<li><a href="#sec-2_4">2.4 NSDI 2014 experiments </a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> What is SENIC? </h2>
+<div class="outline-text-2" id="text-1">
+
+<p>SENIC is a new hardware/software codesigned network stack for the
+datacenter.  SENIC enables 1000s of rate limiters in hardware which
+are managed by the operating system.
+</p>
+<p>
+For more details, check:
+</p><ul>
+<li>Comprehensive system design and evaluation in NSDI 2014: <a href="#link">todo</a>.
+</li>
+<li>NSDI 2014 talk slides and video:
+  <a href="https://www.usenix.org/conference/nsdi14/technical-sessions/presentation/radhakrishnan">https://www.usenix.org/conference/nsdi14/technical-sessions/presentation/radhakrishnan</a>
+</li>
+<li>A position <a href="http://0b4af6cdc2f0c5998459-c0245c5c937c5dedcca3f1764ecc9b2f.r43.cf2.rackcdn.com/11555-hotcloud13-radhakrishnan.pdf">workshop paper</a>, <a href="https://www.usenix.org/conference/hotcloud13/workshop-program/presentations/radhakrishnan">talk and slides</a> at HotCloud 2013.
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Getting started </h2>
+<div class="outline-text-2" id="text-2">
+
+
+</div>
+
+<div id="outline-container-2_1" class="outline-3">
+<h3 id="sec-2_1"><span class="section-number-3">2.1</span> Repositories </h3>
+<div class="outline-text-3" id="text-2_1">
+
+<p>There are two repositories for SENIC: one for the NetFPGA prototype
+meant as a reference design for future NICs, and the other is a
+software prototype, so you can benefit from SENIC today.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2_2" class="outline-3">
+<h3 id="sec-2_2"><span class="section-number-3">2.2</span> Software Prototype </h3>
+<div class="outline-text-3" id="text-2_2">
+
+<p>The SENIC software prototype (SENIC-s) consists of a queueing
+discipline that implements rate limiters.  It differs from the current
+Linux network stack in the following ways:
+</p>
+<ul>
+<li>SENIC-s parallelizes packet handoff: each CPU enqueues in its own
+  local transmit queue.
+</li>
+<li>SENIC-s serializes egress scheduling: a single CPU core computes
+  transmit schedules and hands off packets to the NIC.
+</li>
+<li>SENIC-s caches packet classification at the kernel socket level.
+</li>
+</ul>
+
+<p>
+We have compared SENIC-s with today's rate limiters (htb) and a
+parallel rate limiter (ptb) that was implemented in EyeQ.  For
+comparison, see our paper.  For using ptb, you can download it from
+the ptb repository: <a href="https://github.com/jvimal/ptb">https://github.com/jvimal/ptb</a>.  You can find more
+info about installing ptb here: <a href="http://jvimal.github.com/eyeq">https://jvimal.github.com/eyeq</a>.
+</p>
+
+</div>
+
+<div id="outline-container-2_2_1" class="outline-4">
+<h4 id="sec-2_2_1"><span class="section-number-4">2.2.1</span> Step 1: Installing the Kernel </h4>
+<div class="outline-text-4" id="text-2_2_1">
+
+<p>The modified kernel that implements the parallel handoff is here:
+<a href="https://github.com/sivasankariit/linux-rl">https://github.com/sivasankariit/linux-rl</a>.  You can see the commits
+from Sivasankar in this page:
+<a href="https://github.com/sivasankariit/linux-rl/commits/rl">https://github.com/sivasankariit/linux-rl/commits/rl</a>.  These changes
+implement the parallel packet handoff.
+</p>
+
+
+
+<pre class="src src-bash"># git clone https://github.com/sivasankariit/linux-rl.git
+# cd linux-rl
+# make menuconfig
+... select your options
+# make -j9
+</pre>
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2_2_2" class="outline-4">
+<h4 id="sec-2_2_2"><span class="section-number-4">2.2.2</span> Step 2: Downloading SENIC-software </h4>
+<div class="outline-text-4" id="text-2_2_2">
+
+<p>We built SENIC-s on top of QFQ packet scheduling algorithm.  Linux
+already has QFQ qdisc <code>sch_qfq</code>.  The modified qdisc is available
+here: <a href="https://github.com/sivasankariit/qfq-rl">https://github.com/sivasankariit/qfq-rl</a>.
+</p>
+
+
+
+<pre class="src src-bash"># git clone https://github.com/sivasankariit/qfq-rl
+</pre>
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2_2_3" class="outline-4">
+<h4 id="sec-2_2_3"><span class="section-number-4">2.2.3</span> Step 3: Trying it out </h4>
+<div class="outline-text-4" id="text-2_2_3">
+
+
+<p>
+<b>Reserving a CPU</b>
+</p>
+<p>
+SENIC-s works best if the one CPU core it uses is reserved exclusively
+for egress scheduling.  To do this, you have to isolate one CPU core
+(by default set to 2 in <code>sch_qfq.c</code>) from the kernel scheduler.
+</p>
+
+
+
+<pre class="src src-bash"># vi /path/to/grub/menu.lst
+.. search for kernel boot options, e.g.:
+module          /vmlinuz-x.y.z root=/dev/sda2 ro console=tty0
+
+.. change the above to:
+module          /vmlinuz-x.y.z root=/dev/sda2 ro console=tty0 isol_cpus=...
+</pre>
+
+
+
+<p>
+If you boot into the kernel and run top or htop, you should not see
+any activity on that CPU.
+</p>
+<p>
+<b>Configuring link rate</b>
+</p>
+<p>
+SENIC-s is by default configured for 10Gb/s NIC.  If you want to run
+it at 1Gb/s, you will have to do the following:
+</p>
+
+
+
+<pre class="src src-bash"># cd qfq-rl
+# vi sch_qfq.c +118
+/*
+ * Link speed in Mbps. System time V will be incremented at this rate and the
+ * rate limits of flows (still using the weight variable) should be also
+ * indicated in Mbps.
+ *
+ * This value should actually be about 9844Mb/s but we leave it at
+ * 9800 with the hope of having small queues in the NIC.  The reason
+ * is that with a given MTU, each packet has an Ethernet preamble (4B)
+ * and the frame check sequence (8B) and a minimum recommended
+ * inter-packet gap (0.0096us for 10GbE = 12B).  Thus the max
+ * achievable data rate is MTU / (MTU + 24), which is 0.98439 with MTU
+ * = 1500B and and 0.99734 with MTU=9000B.
+ */
+--&gt; #define LINK_SPEED              9800    // 10Gbps link
+#define QFQ_DRAIN_RATE          ((u64)LINK_SPEED * 125000 * ONE_FP / NSEC_PER_SEC)
+
+.. edit LINK_SPEED accordingly while reading the instructions
+</pre>
+
+
+
+<p>
+The following commands add the new qfq module and create two rate
+limiters at 1Gb/s and 2Gb/s.  The rate limits are implicit weights.
+So, if your NIC only supports 1Gb/s, then the capacity will be divided
+in the ratio 1000:2000 between the two rate limiters.
+</p>
+
+
+
+<pre class="src src-bash">$ cat tc.sh
+#!/bin/bash
+
+dev=eth2
+mtu=1500
+tc qdisc del dev $dev root
+rmmod sch_qfq
+
+cd qfq-rl
+make
+insmod ./sch_qfq.ko
+tc qdisc add dev $dev root handle 1: qfq
+
+# Create rate limiters
+tc class add dev $dev parent 1: classid 1:1 qfq weight 1000 maxpkt $mtu
+tc class add dev $dev parent 1: classid 1:2 qfq weight 2000 maxpkt $mtu
+tc filter add dev $dev parent 1: protocol all prio 1 u32 match ip dport 5001 0xffff flowid 1:1
+# This filter matches all pkts
+tc filter add dev $dev parent 1: protocol all prio 2 u32 match u32 0 0 flowid 1:2
+</pre>
+
+
+
+<p>
+If you want to add a new rate limiter at 100Mb/s, you need to create
+two things: (1) a new class, and (2) a new filter.
+</p>
+
+
+
+<pre class="src src-bash">tc class add dev $dev parent 1: classid 1:$classid qfq weight 100 maxpkt $mtu
+tc filter add dev $dev parent 1: ..(filter string).. flowid 1:$classid
+</pre>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2_3" class="outline-3">
+<h3 id="sec-2_3"><span class="section-number-3">2.3</span> Hardware Prototype </h3>
+<div class="outline-text-3" id="text-2_3">
+
+<p>We also have a proof-of-concept hardware prototype (SENIC-h) which our
+coauthor Yilong built on top of NetFPGA-10G platform.
+</p>
+<p>
+The verilog code and experiments are here:
+<a href="https://github.com/gengyl08/SENIC">https://github.com/gengyl08/SENIC</a>.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2_4" class="outline-3">
+<h3 id="sec-2_4"><span class="section-number-3">2.4</span> NSDI 2014 experiments </h3>
+<div class="outline-text-3" id="text-2_4">
+
+<p>The scripts used in all our experiments in the NSDI paper are
+available online in the <a href="https://github.com/sivasankariit/qfq-rl-eval">test repository</a>.
+</p></div>
+</div>
+</div>
+<div id="postamble">
+<p class="author">Author: Vimalkumar, Sivasankar (<a href="mailto:j.vimal@gmail.com">j.vimal@gmail.com</a>, <a href="mailto:sivasankar@cs.ucsd.edu">sivasankar@cs.ucsd.edu</a>)</p>
+<p class="date">Date: 2014-02-24 09:17:46 PST</p>
+<p class="creator">Generated by Org version 7.4 with Emacs version 24</p>
+<p class="xhtml-validation"><a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a></p>
+</div>
+</div>
+</body>
+</html>
