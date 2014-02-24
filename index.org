@@ -1,0 +1,172 @@
+#+STYLE: <style> * { font-family: sans-serif; } body  { font-size: 1.2em; width: 800px; margin: 0 auto; } </style>
+#+STYLE: <style> p { text-align: left; line-height: 1.2em; } li {padding-bottom: 0.2em;}</style>
+#+STYLE: <style> pre, pre span { font-family: monospace; } </style>
+#+STYLE: <style> code { font-family: monospace; font-size: 10pt; background-color: #EDEDED; padding: 2px;} </style>
+#+STYLE: <style> th,td { border: 1px solid #ddd } </style>
+#+STYLE: <style> div.figure { align: center; } </style>
+#+STYLE: <style> h2 { border-bottom: 1px solid #ccc; color: #900; padding-top: 2em; } body {background-color: #F8F4E7; color: #552800;}
+#+STYLE: h3, h4, h5, h6 {border-bottom: 1px solid #ccc; color: #0B108C; }</style>
+#+BEGIN_HTML
+<script type="text/javascript">
+/* Google analytics */
+</script>
+#+END_HTML
+#+BEGIN_HTML
+<meta name="google-site-verification" content="XNGh0oE3TtdednJ1g-ukOSKZ78wu59yC1sqeQvkf69k" />
+#+END_HTML
+#+OPTIONS: _:nil
+#+EMAIL: j.vimal@gmail.com, sivasankar@cs.ucsd.edu
+
+#+TITLE: SENIC Documentation
+#+AUTHOR: Vimalkumar, Sivasankar
+
+* What is SENIC?
+SENIC is a new hardware/software codesigned network stack for the
+datacenter.  SENIC enables 1000s of rate limiters in hardware which
+are managed by the operating system.
+
+For more details, check:
+- Comprehensive system design and evaluation in NSDI 2014: [[link][todo]].
+- NSDI 2014 talk slides and video:
+  https://www.usenix.org/conference/nsdi14/technical-sessions/presentation/radhakrishnan
+- A position [[http://0b4af6cdc2f0c5998459-c0245c5c937c5dedcca3f1764ecc9b2f.r43.cf2.rackcdn.com/11555-hotcloud13-radhakrishnan.pdf][workshop paper]], [[https://www.usenix.org/conference/hotcloud13/workshop-program/presentations/radhakrishnan][talk and slides]] at HotCloud 2013.
+
+# * Talk at NSDI 2014
+# #+BEGIN_HTML
+# <pre>
+# Stay tuned!
+# </pre>
+# #+END_HTML
+
+* Getting started
+** Repositories
+There are two repositories for SENIC: one for the NetFPGA prototype
+meant as a reference design for future NICs, and the other is a
+software prototype, so you can benefit from SENIC today.
+
+** Software Prototype
+The SENIC software prototype (SENIC-s) consists of a queueing
+discipline that implements rate limiters.  It differs from the current
+Linux network stack in the following ways:
+
+- SENIC-s parallelizes packet handoff: each CPU enqueues in its own
+  local transmit queue.
+- SENIC-s serializes egress scheduling: a single CPU core computes
+  transmit schedules and hands off packets to the NIC.
+- SENIC-s caches packet classification at the kernel socket level.
+
+We have compared SENIC-s with today's rate limiters (htb) and a
+parallel rate limiter (ptb) that was implemented in EyeQ.  For
+comparison, see our paper.  For using ptb, you can download it from
+the ptb repository: [[https://github.com/jvimal/ptb]].  You can find more
+info about installing ptb here: [[http://jvimal.github.com/eyeq][https://jvimal.github.com/eyeq]].
+
+*** Step 1: Installing the Kernel
+The modified kernel that implements the parallel handoff is here:
+https://github.com/sivasankariit/linux-rl.  You can see the commits
+from Sivasankar in this page:
+https://github.com/sivasankariit/linux-rl/commits/rl.  These changes
+implement the parallel packet handoff.
+
+#+BEGIN_SRC bash
+# git clone https://github.com/sivasankariit/linux-rl.git
+# cd linux-rl
+# make menuconfig
+... select your options
+# make -j9
+#+END_SRC
+
+*** Step 2: Downloading SENIC-software
+We built SENIC-s on top of QFQ packet scheduling algorithm.  Linux
+already has QFQ qdisc =sch_qfq=.  The modified qdisc is available
+here: https://github.com/sivasankariit/qfq-rl.
+
+#+BEGIN_SRC bash
+# git clone https://github.com/sivasankariit/qfq-rl
+#+END_SRC
+
+*** Step 3: Trying it out
+
+*Reserving a CPU*
+
+SENIC-s works best if the one CPU core it uses is reserved exclusively
+for egress scheduling.  To do this, you have to isolate one CPU core
+(by default set to 2 in =sch_qfq.c=) from the kernel scheduler.
+
+#+BEGIN_SRC bash
+# vi /path/to/grub/menu.lst
+.. search for kernel boot options, e.g.:
+module          /vmlinuz-x.y.z root=/dev/sda2 ro console=tty0
+
+.. change the above to:
+module          /vmlinuz-x.y.z root=/dev/sda2 ro console=tty0 isol_cpus=...
+#+END_SRC
+
+If you boot into the kernel and run top or htop, you should not see
+any activity on that CPU.
+
+*Configuring link rate*
+
+SENIC-s is by default configured for 10Gb/s NIC.  If you want to run
+it at 1Gb/s, you will have to do the following:
+
+#+BEGIN_SRC bash
+# cd qfq-rl
+# vi sch_qfq.c +118
+/*
+ * Link speed in Mbps. System time V will be incremented at this rate and the
+ * rate limits of flows (still using the weight variable) should be also
+ * indicated in Mbps.
+ *
+ * This value should actually be about 9844Mb/s but we leave it at
+ * 9800 with the hope of having small queues in the NIC.  The reason
+ * is that with a given MTU, each packet has an Ethernet preamble (4B)
+ * and the frame check sequence (8B) and a minimum recommended
+ * inter-packet gap (0.0096us for 10GbE = 12B).  Thus the max
+ * achievable data rate is MTU / (MTU + 24), which is 0.98439 with MTU
+ * = 1500B and and 0.99734 with MTU=9000B.
+ */
+--> #define LINK_SPEED              9800    // 10Gbps link
+#define QFQ_DRAIN_RATE          ((u64)LINK_SPEED * 125000 * ONE_FP / NSEC_PER_SEC)
+
+.. edit LINK_SPEED accordingly while reading the instructions
+#+END_SRC bash
+
+The following commands add the new qfq module and create two rate
+limiters at 1Gb/s and 2Gb/s.  The rate limits are implicit weights.
+So, if your NIC only supports 1Gb/s, then the capacity will be divided
+in the ratio 1000:2000 between the two rate limiters.
+
+#+BEGIN_SRC bash
+$ cat tc.sh
+#!/bin/bash
+
+dev=eth2
+mtu=1500
+tc qdisc del dev $dev root
+rmmod sch_qfq
+
+cd qfq-rl
+make
+insmod ./sch_qfq.ko
+tc qdisc add dev $dev root handle 1: qfq
+
+# Create rate limiters
+tc class add dev $dev parent 1: classid 1:1 qfq weight 1000 maxpkt $mtu
+tc class add dev $dev parent 1: classid 1:2 qfq weight 2000 maxpkt $mtu
+tc filter add dev $dev parent 1: protocol all prio 1 u32 match ip dport 5001 0xffff flowid 1:1
+# This filter matches all pkts
+tc filter add dev $dev parent 1: protocol all prio 2 u32 match u32 0 0 flowid 1:2
+#+END_SRC
+
+If you want to add a new rate limiter at 100Mb/s, you need to create
+two things: (1) a new class, and (2) a new filter.
+
+#+BEGIN_SRC bash
+tc class add dev $dev parent 1: classid 1:$classid qfq weight 100 maxpkt $mtu
+tc filter add dev $dev parent 1: ..(filter string).. flowid 1:$classid
+#+END_SRC bash
+
+** NSDI 2014 experiments
+The scripts used in all our experiments in the NSDI paper are
+available online in the [[https://github.com/sivasankariit/qfq-rl-eval][test repository]].
