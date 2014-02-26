@@ -26,7 +26,8 @@ datacenter.  SENIC enables 1000s of rate limiters in hardware which
 are managed by the operating system.
 
 For more details, check:
-- Comprehensive system design and evaluation in NSDI 2014: [[link][todo]].
+- Our paper, for a comprehensive system design and evaluation in NSDI
+  2014: [[link][coming soon!]].
 - NSDI 2014 talk slides and video:
   https://www.usenix.org/conference/nsdi14/technical-sessions/presentation/radhakrishnan
 - A position [[http://0b4af6cdc2f0c5998459-c0245c5c937c5dedcca3f1764ecc9b2f.r43.cf2.rackcdn.com/11555-hotcloud13-radhakrishnan.pdf][workshop paper]], [[https://www.usenix.org/conference/hotcloud13/workshop-program/presentations/radhakrishnan][talk and slides]] at HotCloud 2013.
