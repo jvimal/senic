@@ -67,9 +67,9 @@ Linux network stack in the following ways:
 
 We have compared SENIC-s with today's rate limiters (htb) and a
 parallel rate limiter (ptb) that was implemented in EyeQ.  For
-comparison, see our paper.  For using ptb, you can download it from
-the ptb repository: [[https://github.com/jvimal/ptb]].  You can find more
-info about installing ptb here: [[http://jvimal.github.com/eyeq][https://jvimal.github.com/eyeq]].
+comparison, see our paper.  =ptb= can be downloaded from this
+repository: [[https://github.com/jvimal/ptb]].  You can find more info
+about installing ptb here: [[http://jvimal.github.com/eyeq][https://jvimal.github.com/eyeq]].
 
 *** Step 1: Installing the Kernel
 The modified kernel that implements the parallel handoff is here:
