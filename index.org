@@ -40,12 +40,18 @@ For more details, check:
 
 * Getting started
 ** Repository quick links
-There are four repositories for SENIC.
+There are four main repositories for SENIC.
 
 - Kernel patches: https://github.com/sivasankariit/linux-rl
 - SENIC-software: https://github.com/sivasankariit/qfq-rl
 - SENIC-hardware (NetFPGA-10G): https://github.com/gengyl08/SENIC
 - SENIC NSDI experiments: https://github.com/sivasankariit/qfq-rl-eval
+
+The following are additional tools we used when evaluating SENIC.
+
+- Modified =iproute2= package: https://github.com/sivasankariit/iproute2
+- TCP/UDP traffic generator: https://github.com/sivasankariit/trafgen
+- Memcached traffic generator: https://github.com/sivasankariit/mcperf
 
 ** Software Prototype
 The SENIC software prototype (SENIC-s) consists of a queueing
@@ -96,6 +102,17 @@ here: https://github.com/sivasankariit/qfq-rl.
 
 #+BEGIN_SRC bash
 # git clone https://github.com/sivasankariit/qfq-rl
+#+END_SRC
+
+The following =iproute2= package incorporates additional per-class
+statistics for debugging, such as the class's virtual time, system
+virtual time, etc.
+
+#+BEGIN_SRC bash
+# git clone https://github.com/sivasankariit/iproute2.git
+# cd iproute2
+# ./configure
+# make -j10
 #+END_SRC
 
 *** Step 3: Trying it out
@@ -191,3 +208,13 @@ https://github.com/gengyl08/SENIC.
 ** NSDI 2014 experiments
 The scripts used in all our experiments in the NSDI paper are
 available online in the [[https://github.com/sivasankariit/qfq-rl-eval][test repository]].
+
+We used the following traffic generators for our experiments.
+
+1. Trafgen -- to generate sustained UDP and TCP traffic:
+   https://github.com/sivasankariit/trafgen.
+
+2. mcperf -- https://github.com/sivasankariit/mcperf.  This is a fork
+   off Twitter's mcperf utility that can generate sustained load on a
+   memcached server.  We added a few features to report statistics at
+   a 100-microsecond granularity.
