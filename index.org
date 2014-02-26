@@ -130,7 +130,7 @@ for egress scheduling.  To do this, you have to isolate one CPU core
 module          /vmlinuz-x.y.z root=/dev/sda2 ro console=tty0
 
 .. change the above to:
-module          /vmlinuz-x.y.z root=/dev/sda2 ro console=tty0 isol_cpus=2
+module          /vmlinuz-x.y.z root=/dev/sda2 ro console=tty0 isolcpus=2
 #+END_SRC
 
 If you boot into the kernel and run top or htop, you should not see
