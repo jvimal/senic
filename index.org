@@ -18,9 +18,6 @@
   ga('send', 'pageview');
 </script>
 #+END_HTML
-#+BEGIN_HTML
-<meta name="google-site-verification" content="XNGh0oE3TtdednJ1g-ukOSKZ78wu59yC1sqeQvkf69k" />
-#+END_HTML
 #+OPTIONS: _:nil
 #+EMAIL: j.vimal@gmail.com, sivasankar@cs.ucsd.edu
 
